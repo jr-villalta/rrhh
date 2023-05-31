@@ -198,9 +198,9 @@ export default function MyNavbar() {
         <DrawerOverlay>
           <DrawerContent bg="gray.700" color="white">
             <DrawerHeader></DrawerHeader>
-            <DrawerCloseButton m={1} />
+            <DrawerCloseButton/>
             <DrawerBody>
-              <Accordion>
+              <Accordion mt={2}>
                 {menu.map((menuItem) => (
                   <AccordionItem key={menuItem.Titulo}>
                     <h2>
