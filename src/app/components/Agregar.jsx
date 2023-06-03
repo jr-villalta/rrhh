@@ -17,13 +17,7 @@ import {
 import { useState, useRef } from "react";
 import { supabase } from "@app/supabaseClient";
 
-const columns = [
-  { name: "Nombres", key: "nombres" },
-  { name: "Apellidos", key: "apellidos" },
-  { name: "Experiencia laboral", key: "experienciaLaboral" },
-  { name: "Habilidades", key: "habilidades" },
-];
-export default function AgregarCandidato() {
+export default function Agregar({dataProp}) {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,28 +30,24 @@ export default function AgregarCandidato() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const insertData = async (candidato) => {
+  const insertData = async (formData) => {
     try {
       const { data, error } = await supabase
-        .from("candidatos")
-        .insert([candidato]);
+        .from(dataProp.table)
+        .insert([formData]);
 
       if (error) {
-        // console.error(error);
         setFormData({});
         return error;
       }
 
-      // console.log("Cadidato", data);
       setFormData({});
       return data;
     } catch (error) {
-      // console.error(error);
       return error;
     }
   };
   const handleSubmit = () => {
-    // console.log(formData);
     let message = insertData(formData);
     return message;
   };
@@ -77,10 +67,10 @@ export default function AgregarCandidato() {
         <ModalOverlay />
         <Flex>
           <ModalContent>
-            <ModalHeader>Agregar candidato</ModalHeader>
+            <ModalHeader>{dataProp.headerText}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              {columns.map((column) => {
+              {dataProp.columns.map((column) => {
                 return (
                   <FormControl key={column.key} mt={4}>
                     <FormLabel>{column.name}</FormLabel>
@@ -88,6 +78,7 @@ export default function AgregarCandidato() {
                       name={column.key}
                       placeholder={column.name}
                       onChange={handleInputChange}
+                      type={column.typeCol}
                     />
                   </FormControl>
                 );
@@ -102,14 +93,14 @@ export default function AgregarCandidato() {
                   let res = await handleSubmit();
                   if (res == null) {
                     toast({
-                      title: "Candidato registrado exitosamente.",
+                      title: dataProp.tittleSuccess,
                       status: "success",
                       duration: 3000,
                       isClosable: true,
                     });
                   } else {
                     toast({
-                      title: "Error al registrar candidato.",
+                      title: dataProp.tittleError,
                       status: "error",
                       duration: 3000,
                       isClosable: true,
