@@ -15,7 +15,7 @@ import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 
 const dataProp = {
   table: "candidatos",
-  tableCaptionText: "Lista de datos",
+  tableCaptionText: "Lista de candidatos",
   thItems: ["Nombres", "Apellidos", "Experiencia laboral", "Habilidades"],
 };
 
@@ -56,7 +56,7 @@ export default function CandidatosTable() {
   useEffect(() => {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
-      console.log(data);
+      // console.log(data);
       setDatosCargados(data || []);
     };
 
@@ -82,7 +82,7 @@ export default function CandidatosTable() {
   }, [datosCargados]);
 
   const toast = useToast();
-  console.log("Renderizado");
+  // console.log("Renderizado");
   return (
     <>
       <TableContainer>
@@ -93,7 +93,6 @@ export default function CandidatosTable() {
               {dataProp.thItems.map((thItem) => {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
-              <Th></Th>
               <Th></Th>
             </Tr>
           </Thead>
@@ -106,18 +105,6 @@ export default function CandidatosTable() {
                     <Td>{dato.apellidos}</Td>
                     <Td>{dato.experienciaLaboral}</Td>
                     <Td>{dato.habilidades}</Td>
-                    <Td
-                      onClick={() => {
-                        toast({
-                          title: "Candidato editado",
-                          status: "warning",
-                          duration: 3000,
-                          isClosable: true,
-                        });
-                      }}
-                    >
-                      <MdOutlineModeEditOutline />
-                    </Td>
                     <Td
                       onClick={() => {
                         let del = deleteCandidate("id", dato.id);

@@ -14,9 +14,9 @@ import {
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 
 const dataProp = {
-  table: "puestosTrabajo",
-  tableCaptionText: "Lista de puestos de trabajo",
-  thItems: ["Nombre del puesto", "Descripcion", "Requisitos", "Estado"],
+  table: "categoriasCapital",
+  tableCaptionText: "Lista de categorias de capital",
+  thItems: ["Nombre", "Descripcion", "Porcentaje del trabajador"],
 };
 
 const fetchData = async () => {
@@ -24,7 +24,6 @@ const fetchData = async () => {
     let { data, error } = await supabase.from(dataProp.table).select("*");
 
     if (error) {
-      console.error(error);
       return error;
     } else {
       return data;
@@ -34,7 +33,7 @@ const fetchData = async () => {
   }
 };
 
-const deletePuesto = async (col, id) => {
+const deleteCandidate = async (col, id) => {
   try {
     const { data, error } = await supabase
       .from(dataProp.table)
@@ -51,7 +50,7 @@ const deletePuesto = async (col, id) => {
   }
 };
 
-export default function PuestosTable() {
+export default function CategoriesTable() {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -83,10 +82,11 @@ export default function PuestosTable() {
   }, [datosCargados]);
 
   const toast = useToast();
+  // console.log("Renderizado");
   return (
     <>
       <TableContainer>
-        <Table>
+        <Table variant="striped" colorScheme="teal">
           <TableCaption>{dataProp.tableCaptionText}</TableCaption>
           <Thead>
             <Tr>
@@ -100,21 +100,17 @@ export default function PuestosTable() {
             {datosCargados != null &&
               datosCargados.map((dato) => {
                 return (
-                  <Tr
-                    key={dato.id}
-                    bg={dato.estadoPuesto ? "green.200" : "red.200"}
-                  >
-                    <Td>{dato.nombrePuesto}</Td>
-                    <Td>{dato.descripcionPuesto}</Td>
-                    <Td>{dato.requisitos}</Td>
-                    <Td>{dato.estadoPuesto ? "Activo" : "Inactivo"}</Td>
+                  <Tr key={dato.id}>
+                    <Td>{dato.nombre}</Td>
+                    <Td>{dato.descripcion}</Td>
+                    <Td>$ {dato.salarioBase}</Td>
                     <Td
                       onClick={() => {
-                        let del = deletePuesto("id", dato.id);
+                        let del = deleteCandidate("id", dato.id);
                         del.then((res) => {
                           if (res == null) {
                             toast({
-                              title: "Puesto eliminado",
+                              title: "Categoria eliminada exitosamente",
                               status: "error",
                               duration: 3000,
                               isClosable: true,

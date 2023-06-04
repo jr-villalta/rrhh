@@ -40,16 +40,12 @@ const menu = [
         path: "/gestion-reclutamiento/reclutamiento",
       },
       {
-        Nombre: "Sistema de seguimiento de candidatos",
+        Nombre: "Seguimiento de candidatos",
         path: "/gestion-reclutamiento/seguimiento-candidatos",
       },
       {
-        Nombre: "Selección de Capital Humano",
-        path: "/gestion-reclutamiento/seleccion-capital",
-      },
-      {
-        Nombre: "Ingreso Expediente de los Trabajadores",
-        path: "/gestion-reclutamiento/ingreso-expediente-trabajadores",
+        Nombre: "Expediente de los Trabajadores",
+        path: "/gestion-reclutamiento/expediente-trabajadores",
       },
       {
         Nombre: "Reporte o Informe de categoría o módulo",
@@ -61,15 +57,15 @@ const menu = [
     Titulo: "Gestión de nóminas y retribuciones Económicas",
     items: [
       {
-        Nombre: "Definición de Salario por Categoría del Capital Humano",
+        Nombre: "Categorias de Capital Humano",
         path: "/gestion-nominas/definicion-salario",
       },
       {
-        Nombre: "Definición de Deducciones por Ley",
+        Nombre: "Deducciones por Ley",
         path: "/gestion-nominas/deducciones",
       },
       {
-        Nombre: "Definición de Prestaciones por Ley",
+        Nombre: "Prestaciones por Ley",
         path: "/gestion-nominas/prestaciones",
       },
       {
