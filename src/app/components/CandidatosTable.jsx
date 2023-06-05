@@ -70,7 +70,7 @@ export default function CandidatosTable() {
         "postgres_changes",
         { event: "*", schema: "public", table: dataProp.table },
         (payload) => {
-          console.log(payload);
+          // console.log(payload);
           fetchDataAndSetState();
         }
       )

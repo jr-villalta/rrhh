@@ -1,7 +1,10 @@
+"use client";
+import AgregarSeguimiento from "@app/components/AgregarSeguimiento";
+
 export default function SeguimientoCandidatos() {
     return (
       <>
-        <div>SeguimientoCandidatos</div>
+        <AgregarSeguimiento />
       </>
     )
   }

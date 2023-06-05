@@ -15,7 +15,13 @@ import {
 const dataProp = {
   table: "renta",
   tableCaptionText: "IMPUESTO SOBRE LA RENTA",
-  thItems: ["DESDE", "HASTA", "% A APLICAR","SOBRE EL EXCESO DE", "CUOTA FIJA"],
+  thItems: [
+    "DESDE",
+    "HASTA",
+    "% A APLICAR",
+    "SOBRE EL EXCESO DE",
+    "CUOTA FIJA",
+  ],
 };
 
 const fetchData = async () => {
@@ -38,14 +44,13 @@ export default function RentaTable() {
   useEffect(() => {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
-      console.log(data);
+      // console.log(data);
       setDatosCargados(data || []);
     };
 
     if (!datosCargados) {
       fetchDataAndSetState();
     }
-
   }, [datosCargados]);
 
   const toast = useToast();
@@ -70,7 +75,9 @@ export default function RentaTable() {
                   <Tr key={dato.tramo}>
                     <Td>TRAMO {dato.tramo}</Td>
                     <Td>$ {dato.desde}</Td>
-                    <Td>$ {dato.hasta}</Td>
+                    <Td>
+                      {dato.hasta == null ? "En adelante" : `$ ${dato.hasta}`}
+                    </Td>
                     <Td>{dato.porcentaje} %</Td>
                     <Td>$ {dato.sobreExceso}</Td>
                     <Td>$ {dato.cuotaFija}</Td>

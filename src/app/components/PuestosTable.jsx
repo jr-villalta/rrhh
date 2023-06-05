@@ -71,7 +71,7 @@ export default function PuestosTable() {
         "postgres_changes",
         { event: "*", schema: "public", table: dataProp.table },
         (payload) => {
-          console.log(payload);
+          // console.log(payload);
           fetchDataAndSetState();
         }
       )

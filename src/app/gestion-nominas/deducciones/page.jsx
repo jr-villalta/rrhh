@@ -20,7 +20,7 @@ export default function Deducciones() {
       <>
         <Agregar dataProp={dataProp}/>
         <DeduccionesTable />
-        <RentaTable mt={3}/>
+        <RentaTable mt={5}/>
       </>
     )
   }
