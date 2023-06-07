@@ -16,7 +16,13 @@ import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 const dataProp = {
   table: "candidatos",
   tableCaptionText: "Lista de candidatos",
-  thItems: ["Nombres", "Apellidos", "Experiencia laboral", "Habilidades"],
+  thItems: [
+    "DUI",
+    "Nombres",
+    "Apellidos",
+    "Experiencia laboral",
+    "Habilidades",
+  ],
 };
 
 const fetchData = async () => {
@@ -100,18 +106,26 @@ export default function CandidatosTable() {
             {datosCargados != null &&
               datosCargados.map((dato) => {
                 return (
-                  <Tr key={dato.id}>
+                  <Tr key={dato.dui}>
+                    <Td>{dato.dui}</Td>
                     <Td>{dato.nombres}</Td>
                     <Td>{dato.apellidos}</Td>
                     <Td>{dato.experienciaLaboral}</Td>
                     <Td>{dato.habilidades}</Td>
                     <Td
                       onClick={() => {
-                        let del = deleteCandidate("id", dato.id);
+                        let del = deleteCandidate("dui", dato.dui);
                         del.then((res) => {
                           if (res == null) {
                             toast({
-                              title: "Candidato eliminado",
+                              title: "Candidato eliminado exitosamente",
+                              status: "Success",
+                              duration: 3000,
+                              isClosable: true,
+                            });
+                          } else {
+                            toast({
+                              title: "Error: El candidato no ha sido eliminado",
                               status: "error",
                               duration: 3000,
                               isClosable: true,

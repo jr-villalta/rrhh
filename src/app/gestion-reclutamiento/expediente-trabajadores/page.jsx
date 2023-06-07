@@ -1,8 +1,10 @@
+"use client";
+import TrabajadoresTable from "@app/components/TrabajadoresTable";
+
 export default function IngresoExpediente() {
-    return (
-      <>
-        <div>IngresoExpediente a Trabajadores</div>
-      </>
-    )
-  }
-  
+  return (
+    <>
+      <TrabajadoresTable />
+    </>
+  );
+}

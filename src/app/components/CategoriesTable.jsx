@@ -111,6 +111,13 @@ export default function CategoriesTable() {
                           if (res == null) {
                             toast({
                               title: "Categoria eliminada exitosamente",
+                              status: "susccess",
+                              duration: 3000,
+                              isClosable: true,
+                            });
+                          }else{
+                            toast({
+                              title: "Error: la categoria no pudo ser eliminada",
                               status: "error",
                               duration: 3000,
                               isClosable: true,

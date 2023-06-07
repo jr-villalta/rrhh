@@ -1,9 +1,10 @@
 "use client";
-import Agregar from "@app/components/Agregar";
+import Agregar from "@app/components/AgregarCandidato";
 import CandidatosTable from "@app/components/CandidatosTable";
 
 const dataProp = {
   columns: [
+    { name: "DUI", key: "dui", typeCol: "text"},
     { name: "Nombres", key: "nombres", typeCol: "text" },
     { name: "Apellidos", key: "apellidos", typeCol: "text" },
     { name: "Experiencia laboral", key: "experienciaLaboral", typeCol: "text" },
@@ -16,7 +17,7 @@ const dataProp = {
 };
 
 export default function Reclutamiento() {
-  console.log("Renderizado");
+  // console.log("Renderizado");
   return (
     <>
       <Agregar dataProp={dataProp} />

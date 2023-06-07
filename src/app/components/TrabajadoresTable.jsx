@@ -11,12 +11,12 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import { MdOutlineModeEditOutline } from "react-icons/md";
 
 const dataProp = {
-  table: "deducciones",
-  tableCaptionText: "Lista de deducciones",
-  thItems: ["Nombre", "Porcentaje del trabajador", "Porcentaje del empleador"],
+  table: "trabajadores",
+  tableCaptionText: "Lista de trabajadores",
+  thItems: ["dui", "Salario", "telefono", "direccion", "estadoCivil"],
 };
 
 const fetchData = async () => {
@@ -33,24 +33,7 @@ const fetchData = async () => {
   }
 };
 
-const deleteCandidate = async (col, id) => {
-  try {
-    const { data, error } = await supabase
-      .from(dataProp.table)
-      .delete()
-      .eq(col, id);
-
-    if (error) {
-      return error;
-    } else {
-      return data;
-    }
-  } catch (error) {
-    return error;
-  }
-};
-
-export default function DeduccionesTable() {
+export default function TrabajadoresTable() {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -86,7 +69,7 @@ export default function DeduccionesTable() {
   return (
     <>
       <TableContainer>
-        <Table variant="striped" colorScheme="teal">
+        <Table>
           <TableCaption>{dataProp.tableCaptionText}</TableCaption>
           <Thead>
             <Tr>
@@ -100,33 +83,49 @@ export default function DeduccionesTable() {
             {datosCargados != null &&
               datosCargados.map((dato) => {
                 return (
-                  <Tr key={dato.id}>
-                    <Td>{dato.nombre}</Td>
-                    <Td>{dato.porcentajeTrabajador} %</Td>
-                    <Td>{dato.porcentajeEmpleador} %</Td>
+                  <Tr
+                    key={dato.dui}
+                    bg={
+                      dato.idCategoria == null ||
+                      dato.telefono == null ||
+                      dato.direccion == null ||
+                      dato.estadoCivil == null
+                        ? "orange.200"
+                        : ""
+                    }
+                  >
+                    <Td>{dato.dui}</Td>
+                    {dato.idCategoria == null ? (
+                      <Td>No definido</Td>
+                    ) : (
+                      <Td>{dato.idCategoria}</Td>
+                    )}
+                    {dato.telefono == null ? (
+                      <Td>No definido</Td>
+                    ) : (
+                      <Td>{dato.telefono}</Td>
+                    )}
+                    {dato.direccion == null ? (
+                      <Td>No definido</Td>
+                    ) : (
+                      <Td>{dato.direccion}</Td>
+                    )}
+                    {dato.estadoCivil == null ? (
+                      <Td>No definido</Td>
+                    ) : (
+                      <Td>{dato.estadoCivil}</Td>
+                    )}
                     <Td
                       onClick={() => {
-                        let del = deleteCandidate("id", dato.id);
-                        del.then((res) => {
-                          if (res == null) {
-                            toast({
-                              title: "Deduccion eliminada exitosamente",
-                              status: "success",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          }else{
-                            toast({
-                              title: "Error: no se pudo eliminar la deduccion",
-                              status: "error",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          }
+                        toast({
+                          title: "Error: El trabajador no se actualizo",
+                          status: "error",
+                          duration: 3000,
+                          isClosable: true,
                         });
                       }}
                     >
-                      <MdOutlineDelete />
+                      <MdOutlineModeEditOutline />
                     </Td>
                   </Tr>
                 );

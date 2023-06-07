@@ -114,7 +114,14 @@ export default function PuestosTable() {
                         del.then((res) => {
                           if (res == null) {
                             toast({
-                              title: "Puesto eliminado",
+                              title: "Puesto eliminado exitosamente",
+                              status: "success",
+                              duration: 3000,
+                              isClosable: true,
+                            });
+                          }else{
+                            toast({
+                              title: "Error: No se pudo eliminar el puesto",
                               status: "error",
                               duration: 3000,
                               isClosable: true,

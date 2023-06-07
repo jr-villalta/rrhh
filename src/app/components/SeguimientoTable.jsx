@@ -14,9 +14,9 @@ import {
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 
 const dataProp = {
-  table: "deducciones",
-  tableCaptionText: "Lista de deducciones",
-  thItems: ["Nombre", "Porcentaje del trabajador", "Porcentaje del empleador"],
+  table: "seguimiento",
+  tableCaptionText: "Lista de seguimiento de candidatos",
+  thItems: ["Candidato", "Puesto", "etapa", "Aprobado"],
 };
 
 const fetchData = async () => {
@@ -50,7 +50,7 @@ const deleteCandidate = async (col, id) => {
   }
 };
 
-export default function DeduccionesTable() {
+export default function SeguimientoTable() {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function DeduccionesTable() {
   // console.log("Renderizado");
   return (
     <>
-      <TableContainer>
+      <TableContainer mt={5}>
         <Table variant="striped" colorScheme="teal">
           <TableCaption>{dataProp.tableCaptionText}</TableCaption>
           <Thead>
@@ -101,32 +101,21 @@ export default function DeduccionesTable() {
               datosCargados.map((dato) => {
                 return (
                   <Tr key={dato.id}>
-                    <Td>{dato.nombre}</Td>
-                    <Td>{dato.porcentajeTrabajador} %</Td>
-                    <Td>{dato.porcentajeEmpleador} %</Td>
+                    <Td>{dato.candidato}</Td>
+                    <Td>{dato.idPuesto}</Td>
+                    <Td>{dato.etapa}</Td>
+                    <Td>{dato.aprobacion}</Td>
                     <Td
                       onClick={() => {
-                        let del = deleteCandidate("id", dato.id);
-                        del.then((res) => {
-                          if (res == null) {
-                            toast({
-                              title: "Deduccion eliminada exitosamente",
-                              status: "success",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          }else{
-                            toast({
-                              title: "Error: no se pudo eliminar la deduccion",
-                              status: "error",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          }
+                        toast({
+                          title: "Error: No se actualizo el registro",
+                          status: "error",
+                          duration: 3000,
+                          isClosable: true,
                         });
                       }}
                     >
-                      <MdOutlineDelete />
+                      <MdOutlineModeEditOutline />
                     </Td>
                   </Tr>
                 );
