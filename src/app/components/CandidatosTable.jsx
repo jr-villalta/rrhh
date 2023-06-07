@@ -12,6 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import EditCandidato from "./EditCandidato";
 
 const dataProp = {
   table: "candidatos",
@@ -56,7 +57,7 @@ const deleteCandidate = async (col, id) => {
   }
 };
 
-export default function CandidatosTable() {
+export default function CandidatosTable({editProp}) {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -100,6 +101,7 @@ export default function CandidatosTable() {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
               <Th></Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -112,6 +114,9 @@ export default function CandidatosTable() {
                     <Td>{dato.apellidos}</Td>
                     <Td>{dato.experienciaLaboral}</Td>
                     <Td>{dato.habilidades}</Td>
+                    <Td>
+                      <EditCandidato dataProp={editProp} prevData={dato} />
+                    </Td>
                     <Td
                       onClick={() => {
                         let del = deleteCandidate("dui", dato.dui);

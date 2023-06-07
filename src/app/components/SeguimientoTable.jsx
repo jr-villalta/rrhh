@@ -12,6 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import EditSeguimiento from "./EditSeguimiento";
 
 const dataProp = {
   table: "seguimiento",
@@ -21,24 +22,11 @@ const dataProp = {
 
 const fetchData = async () => {
   try {
-    let { data, error } = await supabase.from(dataProp.table).select("*");
-
-    if (error) {
-      return error;
-    } else {
-      return data;
-    }
-  } catch (error) {
-    return error;
-  }
-};
-
-const deleteCandidate = async (col, id) => {
-  try {
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from(dataProp.table)
-      .delete()
-      .eq(col, id);
+      .select(
+        "id, etapa, aprobacion, candidatos(nombres,apellidos), puestostrabajo(nombrePuesto)"
+      );
 
     if (error) {
       return error;
@@ -110,25 +98,20 @@ export default function SeguimientoTable() {
                         : "red.100"
                     }
                   >
-                    <Td>{dato.candidato}</Td>
-                    <Td>{dato.idPuesto}</Td>
+                    <Td>
+                      {dato.candidatos.nombres +
+                        " " +
+                        dato.candidatos.apellidos}
+                    </Td>
+                    <Td>{dato.puestostrabajo.nombrePuesto}</Td>
                     <Td>{dato.etapa}</Td>
                     {dato.aprobacion == null ? (
                       <Td>No definido</Td>
                     ) : (
                       <Td>{dato.aprobacion ? "Aprobado" : "Reprobado"}</Td>
                     )}
-                    <Td
-                      onClick={() => {
-                        toast({
-                          title: "Error: No se actualizo el registro",
-                          status: "error",
-                          duration: 3000,
-                          isClosable: true,
-                        });
-                      }}
-                    >
-                      <MdOutlineModeEditOutline />
+                    <Td>
+                      <EditSeguimiento prevData={dato} />
                     </Td>
                   </Tr>
                 );

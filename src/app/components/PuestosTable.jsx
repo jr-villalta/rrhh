@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { MdOutlineDelete } from "react-icons/md";
-import Editar from "./EditarPuestos";
+import Editar from "./EditPuestos";
 
 const dataProp = {
   table: "puestostrabajo",

@@ -67,7 +67,7 @@ export default function Agregar({ dataProp }) {
     try {
       const { data, error } = await supabase
         .from("seguimiento")
-        .insert([{ idPuesto: puesto, idCandidato: dui }]);
+        .insert([{ idPuesto: puesto, candidato: dui }]);
 
       if (error) {
         setFormData({});
