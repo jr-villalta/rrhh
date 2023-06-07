@@ -13,11 +13,13 @@ import {
   Button,
   useDisclosure,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { supabase } from "@app/supabaseClient";
+import { MdOutlineModeEditOutline } from "react-icons/md";
 
-export default function Agregar({dataProp}) {
+export default function EditarPuestos({ dataProp, prevData }) {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,11 +32,12 @@ export default function Agregar({dataProp}) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const insertData = async (formData) => {
+  const editData = async (formData, column, id) => {
     try {
       const { data, error } = await supabase
         .from(dataProp.table)
-        .insert([formData]);
+        .update(formData)
+        .eq(`${column}`, `${id}`);
 
       if (error) {
         setFormData({});
@@ -48,16 +51,13 @@ export default function Agregar({dataProp}) {
     }
   };
   const handleSubmit = () => {
-    let message = insertData(formData);
-    return message;
+    let res = editData(formData, "id", prevData.id);
+    return res;
   };
   return (
     <>
-      <Flex justifyContent="end" p={3}>
-        <Button colorScheme="teal" onClick={onOpen}>
-          Insertar
-        </Button>
-      </Flex>
+    < MdOutlineModeEditOutline onClick={onOpen}/>
+
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -78,10 +78,22 @@ export default function Agregar({dataProp}) {
                       name={column.key}
                       onChange={handleInputChange}
                       type={column.typeCol}
+                      defaultValue={prevData[column.key]}
                     />
                   </FormControl>
                 );
               })}
+              <FormControl mt={2}>
+                <FormLabel>Estado</FormLabel>
+                <Select
+                  name="estadoPuesto"
+                  onChange={handleInputChange}
+                  defaultValue={prevData.estadoPuesto}
+                >
+                  <option value={true}>Activo</option>
+                  <option value={false}>Inactivo</option>
+                </Select>
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
@@ -108,7 +120,7 @@ export default function Agregar({dataProp}) {
                   onClose();
                 }}
               >
-                Registrar
+                Actualizar
               </Button>
             </ModalFooter>
           </ModalContent>

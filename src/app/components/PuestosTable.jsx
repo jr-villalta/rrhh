@@ -11,7 +11,8 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
+import Editar from "./EditarPuestos";
 
 const dataProp = {
   table: "puestostrabajo",
@@ -51,7 +52,7 @@ const deletePuesto = async (col, id) => {
   }
 };
 
-export default function PuestosTable() {
+export default function PuestosTable({editProp}) {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -94,6 +95,7 @@ export default function PuestosTable() {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
               <Th></Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -106,8 +108,11 @@ export default function PuestosTable() {
                   >
                     <Td>{dato.nombrePuesto}</Td>
                     <Td>{dato.descripcionPuesto}</Td>
-                    <Td>{dato.requisitos}</Td>
+                    <Td >{dato.requisitos}</Td>
                     <Td>{dato.estadoPuesto ? "Activo" : "Inactivo"}</Td>
+                    <Td>
+                      <Editar dataProp={editProp} prevData={dato}/>
+                    </Td>
                     <Td
                       onClick={() => {
                         let del = deletePuesto("id", dato.id);
