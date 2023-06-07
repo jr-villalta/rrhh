@@ -36,7 +36,7 @@ export default function Agregar({ dataProp }) {
     const fetchPuestos = async () => {
       try {
         let { data, error } = await supabase
-          .from("puestosTrabajo")
+          .from("puestostrabajo")
           .select("id, nombrePuesto")
           .eq("estadoPuesto", true);
 
