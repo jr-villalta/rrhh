@@ -86,7 +86,7 @@ export default function SeguimientoTable() {
   return (
     <>
       <TableContainer mt={5}>
-        <Table variant="striped" colorScheme="teal">
+        <Table>
           <TableCaption>{dataProp.tableCaptionText}</TableCaption>
           <Thead>
             <Tr>
@@ -100,11 +100,24 @@ export default function SeguimientoTable() {
             {datosCargados != null &&
               datosCargados.map((dato) => {
                 return (
-                  <Tr key={dato.id}>
+                  <Tr
+                    key={dato.id}
+                    bg={
+                      dato.aprobacion == null
+                        ? "gray.100"
+                        : dato.aprobacion
+                        ? "green.100"
+                        : "red.100"
+                    }
+                  >
                     <Td>{dato.candidato}</Td>
                     <Td>{dato.idPuesto}</Td>
                     <Td>{dato.etapa}</Td>
-                    <Td>{dato.aprobacion}</Td>
+                    {dato.aprobacion == null ? (
+                      <Td>No definido</Td>
+                    ) : (
+                      <Td>{dato.aprobacion ? "Aprobado" : "Reprobado"}</Td>
+                    )}
                     <Td
                       onClick={() => {
                         toast({

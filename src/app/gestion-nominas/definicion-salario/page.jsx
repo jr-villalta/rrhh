@@ -8,7 +8,7 @@ const dataProp = {
     { name: "Descripcion", key: "descripcion", typeCol: "text" },
     { name: "Salario", key: "salarioBase", typeCol: "number" },
   ],
-  table: "categoriasCapital",
+  table: "categoriascapital",
   headerText: "Agregar categoria de capital",
   tittleError: "Error al registrar la categoria de capital",
   tittleSuccess: "Categoria de capital registrada exitosamente",

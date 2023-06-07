@@ -14,7 +14,7 @@ import {
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 
 const dataProp = {
-  table: "puestosTrabajo",
+  table: "puestostrabajo",
   tableCaptionText: "Lista de puestos de trabajo",
   thItems: ["Nombre del puesto", "Descripcion", "Requisitos", "Estado"],
 };

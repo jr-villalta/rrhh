@@ -8,7 +8,7 @@ const dataProp = {
   { name: "Descripcion", key: "descripcionPuesto", typeCol:"text"},
   { name: "Requisitos", key: "requisitos", typeCol:"text"},
 ],
-  table: "puestosTrabajo",
+  table: "puestostrabajo",
   headerText: "Agregar puesto",
   tittleError: "Error al registrar el puesto.",
   tittleSuccess: "Puesto registrado exitosamente.",

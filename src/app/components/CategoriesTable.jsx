@@ -14,9 +14,9 @@ import {
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 
 const dataProp = {
-  table: "categoriasCapital",
+  table: "categoriascapital",
   tableCaptionText: "Lista de categorias de capital",
-  thItems: ["Nombre", "Descripcion", "Porcentaje del trabajador"],
+  thItems: ["Nombre", "Descripcion", "Salario base"],
 };
 
 const fetchData = async () => {
