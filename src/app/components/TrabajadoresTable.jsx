@@ -11,7 +11,8 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineModeEditOutline } from "react-icons/md";
+import EditTrabajadores from "./EditTrabajadores";
+import { HiMinusCircle, HiCheckCircle } from "react-icons/hi2";
 
 const dataProp = {
   table: "trabajadores",
@@ -48,7 +49,7 @@ export default function TrabajadoresTable() {
   useEffect(() => {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
-      console.log(data);
+      // console.log(data);
       setDatosCargados(data || []);
     };
 
@@ -77,7 +78,7 @@ export default function TrabajadoresTable() {
   // console.log("Renderizado");
   return (
     <>
-      <TableContainer>
+      <TableContainer mt={4}>
         <Table>
           <TableCaption>{dataProp.tableCaptionText}</TableCaption>
           <Thead>
@@ -85,6 +86,7 @@ export default function TrabajadoresTable() {
               {dataProp.thItems.map((thItem) => {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
+              <Th></Th>
               <Th></Th>
             </Tr>
           </Thead>
@@ -103,34 +105,32 @@ export default function TrabajadoresTable() {
                     }
                   >
                     <Td>{dato.dui}</Td>
-                    <Td>{dato.candidatos.nombres + " " + dato.candidatos.apellidos}</Td>
+                    <Td>
+                      {dato.candidatos.nombres +
+                        " " +
+                        dato.candidatos.apellidos}
+                    </Td>
                     <Td>$ {dato.categoriascapital.salarioBase}</Td>
-                    {dato.telefono == null ? (
-                      <Td>No definido</Td>
-                    ) : (
+                    {dato.telefono != null ? (
                       <Td>{dato.telefono}</Td>
-                    )}
-                    {dato.direccion == null ? (
-                      <Td>No definido</Td>
                     ) : (
+                      <Td>No definido</Td>
+                    )}
+                    {dato.direccion != null ? (
                       <Td>{dato.direccion}</Td>
-                    )}
-                    {dato.estadoCivil == null ? (
-                      <Td>No definido</Td>
                     ) : (
-                      <Td>{dato.estadoCivil}</Td>
+                      <Td>No definido</Td>
                     )}
-                    <Td
-                      onClick={() => {
-                        toast({
-                          title: "Error: El trabajador no se actualizo",
-                          status: "error",
-                          duration: 3000,
-                          isClosable: true,
-                        });
-                      }}
-                    >
-                      <MdOutlineModeEditOutline />
+                    {dato.estadoCivil != null ? (
+                      <Td>{dato.estadoCivil}</Td>
+                    ) : (
+                      <Td>No definido</Td>
+                    )}
+                    <Td>
+                      <EditTrabajadores prevData={dato} />
+                    </Td>
+                    <Td>
+                      {dato.activo ? <HiMinusCircle /> : <HiCheckCircle />}
                     </Td>
                   </Tr>
                 );
