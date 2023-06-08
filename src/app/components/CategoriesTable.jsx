@@ -11,7 +11,8 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
+import EditCategorias from "./EditCategorias";
 
 const dataProp = {
   table: "categoriascapital",
@@ -94,6 +95,7 @@ export default function CategoriesTable() {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
               <Th></Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -103,7 +105,17 @@ export default function CategoriesTable() {
                   <Tr key={dato.id}>
                     <Td>{dato.nombre}</Td>
                     <Td>{dato.descripcion}</Td>
-                    <Td>$ {dato.salarioBase}</Td>
+                    <Td>
+                      ${" "}
+                      {(() => {
+                        let salary = dato.salarioBase;
+                        salary = salary.toFixed(2);
+                        return salary;
+                      })()}
+                    </Td>
+                    <Td>
+                      <EditCategorias prevData={dato} />
+                    </Td>
                     <Td
                       onClick={() => {
                         let del = deleteCandidate("id", dato.id);
@@ -115,9 +127,10 @@ export default function CategoriesTable() {
                               duration: 3000,
                               isClosable: true,
                             });
-                          }else{
+                          } else {
                             toast({
-                              title: "Error: la categoria no pudo ser eliminada",
+                              title:
+                                "Error: la categoria no pudo ser eliminada",
                               status: "error",
                               duration: 3000,
                               isClosable: true,

@@ -43,6 +43,23 @@ const fetchData = async () => {
   }
 };
 
+const changeEstado = async (col, id, estado) => {
+  try {
+    const { data, error } = await supabase
+      .from(dataProp.table)
+      .update({ activo: estado })
+      .eq(col, id);
+
+    if (error) {
+      return error;
+    } else {
+      return data;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 export default function TrabajadoresTable() {
   const [datosCargados, setDatosCargados] = useState(null);
 
@@ -97,9 +114,11 @@ export default function TrabajadoresTable() {
                   <Tr
                     key={dato.dui}
                     bg={
-                      dato.telefono == null ||
-                      dato.direccion == null ||
-                      dato.estadoCivil == null
+                      dato.activo == false
+                        ? "red.200"
+                        : dato.telefono == null ||
+                          dato.direccion == null ||
+                          dato.estadoCivil == null
                         ? "orange.200"
                         : ""
                     }
@@ -110,7 +129,14 @@ export default function TrabajadoresTable() {
                         " " +
                         dato.candidatos.apellidos}
                     </Td>
-                    <Td>$ {dato.categoriascapital.salarioBase}</Td>
+                    <Td>
+                    ${" "}
+                      {(() => {
+                        let salary = dato.categoriascapital.salarioBase;
+                        salary = salary.toFixed(2);
+                        return salary;
+                      })()}
+                    </Td>
                     {dato.telefono != null ? (
                       <Td>{dato.telefono}</Td>
                     ) : (
@@ -130,7 +156,57 @@ export default function TrabajadoresTable() {
                       <EditTrabajadores prevData={dato} />
                     </Td>
                     <Td>
-                      {dato.activo ? <HiMinusCircle /> : <HiCheckCircle />}
+                      {dato.activo ? (
+                        <HiMinusCircle
+                          onClick={async () => {
+                            let res = await changeEstado(
+                              "dui",
+                              dato.dui,
+                              false
+                            );
+                            if (res != null) {
+                              toast({
+                                title: "Error",
+                                description: "No se pudo actualizar el estado",
+                                status: "error",
+                                duration: 3000,
+                                isClosable: true,
+                              });
+                            } else {
+                              toast({
+                                title: "Actualizado",
+                                description: "Trajador desactivado",
+                                status: "success",
+                                duration: 3000,
+                                isClosable: true,
+                              });
+                            }
+                          }}
+                        />
+                      ) : (
+                        <HiCheckCircle
+                          onClick={async () => {
+                            let res = await changeEstado("dui", dato.dui, true);
+                            if (res != null) {
+                              toast({
+                                title: "Error",
+                                description: "No se pudo actualizar el estado",
+                                status: "error",
+                                duration: 3000,
+                                isClosable: true,
+                              });
+                            } else {
+                              toast({
+                                title: "Actualizado",
+                                description: "Trabajador activado",
+                                status: "success",
+                                duration: 3000,
+                                isClosable: true,
+                              });
+                            }
+                          }}
+                        />
+                      )}
                     </Td>
                   </Tr>
                 );
