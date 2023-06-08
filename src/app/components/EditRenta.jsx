@@ -13,12 +13,29 @@ import {
   Button,
   useDisclosure,
   useToast,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { supabase } from "@app/supabaseClient";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 
-export default function EditCandidatos({ dataProp, prevData }) {
+const dataProp = {
+  table: "renta",
+  headerText: "Editar Tramo de Renta",
+  tittleSuccess: "Trajo de renta actualizado",
+  tittleError: "Error al actualizar tramo de renta",
+  columns: [
+    { name: "Desde", key: "desde", typeCol: "number" },
+    { name: "Hasta", key: "hasta", typeCol: "number" },
+    { name: "Porcentaje", key: "porcentaje", typeCol: "number" },
+    { name: "Sobre ecceso", key: "sobreExceso", typeCol: "number" },
+    { name: "Cuota fija", key: "cuotaFija", typeCol: "number" },
+  ],
+};
+
+export default function EditRenta({ prevData }) {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,12 +67,15 @@ export default function EditCandidatos({ dataProp, prevData }) {
     }
   };
   const handleSubmit = () => {
-    let res = editData(formData, "dui", prevData.dui);
+    let res = editData(formData, "tramo", prevData.tramo);
+    // console.log(formData);
     return res;
   };
+
+  let visible = prevData.aprobacion == null;
   return (
     <>
-      <MdOutlineModeEditOutline onClick={onOpen} />
+      {visible && <MdOutlineModeEditOutline onClick={onOpen} />}
 
       <Modal
         initialFocusRef={initialRef}
@@ -69,18 +89,48 @@ export default function EditCandidatos({ dataProp, prevData }) {
             <ModalHeader>{dataProp.headerText}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              {dataProp.columns.map((column) => {
-                return (
-                  <FormControl key={column.key} mt={2}>
-                    <FormLabel>{column.name}</FormLabel>
-                    <Input
-                      name={column.key}
-                      onChange={handleInputChange}
-                      type={column.typeCol}
-                      defaultValue={prevData[column.key] != null ? prevData[column.key] : ""}
-                      isReadOnly={column.key == "dui" ? true : false}
-                      bg={column.key == "dui" ? "gray.200" : "white"}
-                    />
+              {dataProp.columns.map((col) => {
+                return col.key == "porcentaje" ? (
+                  <FormControl key={col.name}>
+                    <FormLabel>{col.name}</FormLabel>
+                    <InputGroup>
+                      <Input
+                        name={col.key}
+                        onChange={handleInputChange}
+                        type={col.typeCol}
+                        defaultValue={
+                          prevData[col.key] != null && prevData[col.key]
+                        }
+                      />
+                      <InputRightElement
+                        pointerEvents="none"
+                        color="gray.400"
+                        fontSize="1.2em"
+                      >
+                        %
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
+                ) : (
+                  <FormControl key={col.name}>
+                    <FormLabel>{col.name}</FormLabel>
+                    <InputGroup>
+                      <InputLeftElement
+                        pointerEvents="none"
+                        color="gray.400"
+                        fontSize="1.2em"
+                      >
+                        $
+                      </InputLeftElement>
+                      <Input
+                        name={col.key}
+                        onChange={handleInputChange}
+                        type={col.typeCol}
+                        defaultValue={
+                          prevData[col.key] != null && prevData[col.key]
+                        }
+                      />
+                    </InputGroup>
                   </FormControl>
                 );
               })}
