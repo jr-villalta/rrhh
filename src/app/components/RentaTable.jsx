@@ -11,6 +11,7 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
+import EditRenta from "./EditRenta";
 
 const dataProp = {
   table: "renta",
@@ -45,12 +46,29 @@ export default function RentaTable() {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
       // console.log(data);
+      data.sort((a, b) => a.tramo - b.tramo);
       setDatosCargados(data || []);
     };
 
     if (!datosCargados) {
       fetchDataAndSetState();
     }
+
+    const suscripcion = supabase
+      .channel("custom-all-channel")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "renta" },
+        (payload) => {
+          // console.log("Change received!", payload);
+          fetchDataAndSetState();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      suscripcion.unsubscribe();
+    };
   }, [datosCargados]);
 
   const toast = useToast();
@@ -66,6 +84,7 @@ export default function RentaTable() {
               {dataProp.thItems.map((thItem) => {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -81,6 +100,9 @@ export default function RentaTable() {
                     <Td>{dato.porcentaje} %</Td>
                     <Td>$ {dato.sobreExceso}</Td>
                     <Td>$ {dato.cuotaFija}</Td>
+                    <Td>
+                      <EditRenta prevData={dato} />
+                    </Td>
                   </Tr>
                 );
               })}

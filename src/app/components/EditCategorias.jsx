@@ -67,7 +67,7 @@ export default function EditCategorias({ prevData }) {
   const handleSubmit = () => {
     let res = editData(formData, "id", prevData.id);
     // console.log(formData);
-    return null;
+    return res;
   };
 
   let visible = prevData.aprobacion == null;
