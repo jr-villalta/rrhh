@@ -22,22 +22,6 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 const dataProp = {
   table: "seguimiento",
   tableCaptionText: "Lista de seguimiento de candidatos",
-  columns: [
-    {
-      name: "Candidato",
-      key: "candidatoId",
-      typeCol: "text",
-      isReadOnly: true,
-    },
-    { name: "Puesto", key: "puestoId", typeCol: "text", isReadOnly: true },
-    { name: "Etapa", key: "etapa", typeCol: "select", isReadOnly: false },
-    {
-      name: "Aprobado",
-      key: "aprobacion",
-      typeCol: "select",
-      isReadOnly: false,
-    },
-  ],
   headerText: "Editar seguimiento",
   tittleSuccess: "Seguimiento actualizado",
   tittleError: "Error al actualizar seguimiento",

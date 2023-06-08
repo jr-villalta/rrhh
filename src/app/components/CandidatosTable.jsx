@@ -10,6 +10,7 @@ import {
   TableCaption,
   TableContainer,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import EditCandidato from "./EditCandidato";
@@ -57,7 +58,7 @@ const deleteCandidate = async (col, id) => {
   }
 };
 
-export default function CandidatosTable({editProp}) {
+export default function CandidatosTable({ editProp }) {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -112,8 +113,26 @@ export default function CandidatosTable({editProp}) {
                     <Td>{dato.dui}</Td>
                     <Td>{dato.nombres}</Td>
                     <Td>{dato.apellidos}</Td>
-                    <Td>{dato.experienciaLaboral}</Td>
-                    <Td>{dato.habilidades}</Td>
+                    <Td>
+                      <Box
+                        w={300}
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                        whiteSpace="wrap"
+                      >
+                        {dato.experienciaLaboral}
+                      </Box>
+                    </Td>
+                    <Td>
+                      <Box
+                        w={300}
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                        whiteSpace="wrap"
+                      >
+                        {dato.habilidades}
+                      </Box>
+                    </Td>
                     <Td>
                       <EditCandidato dataProp={editProp} prevData={dato} />
                     </Td>

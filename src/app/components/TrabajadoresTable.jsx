@@ -16,12 +16,21 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 const dataProp = {
   table: "trabajadores",
   tableCaptionText: "Lista de trabajadores",
-  thItems: ["dui", "Salario", "telefono", "direccion", "estadoCivil"],
+  thItems: [
+    "dui",
+    "nombre completo",
+    "Salario",
+    "telefono",
+    "direccion",
+    "estadoCivil",
+  ],
 };
 
 const fetchData = async () => {
   try {
-    let { data, error } = await supabase.from(dataProp.table).select("*");
+    let { data, error } = await supabase
+      .from(dataProp.table)
+      .select("*,categoriascapital(salarioBase),candidatos(nombres,apellidos)");
 
     if (error) {
       return error;
@@ -39,7 +48,7 @@ export default function TrabajadoresTable() {
   useEffect(() => {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
-      // console.log(data);
+      console.log(data);
       setDatosCargados(data || []);
     };
 
@@ -86,7 +95,6 @@ export default function TrabajadoresTable() {
                   <Tr
                     key={dato.dui}
                     bg={
-                      dato.idCategoria == null ||
                       dato.telefono == null ||
                       dato.direccion == null ||
                       dato.estadoCivil == null
@@ -95,11 +103,8 @@ export default function TrabajadoresTable() {
                     }
                   >
                     <Td>{dato.dui}</Td>
-                    {dato.idCategoria == null ? (
-                      <Td>No definido</Td>
-                    ) : (
-                      <Td>{dato.idCategoria}</Td>
-                    )}
+                    <Td>{dato.candidatos.nombres + " " + dato.candidatos.apellidos}</Td>
+                    <Td>$ {dato.categoriascapital.salarioBase}</Td>
                     {dato.telefono == null ? (
                       <Td>No definido</Td>
                     ) : (
