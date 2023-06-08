@@ -102,7 +102,6 @@ export default function CandidatosTable({ editProp }) {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
               <Th></Th>
-              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -135,30 +134,6 @@ export default function CandidatosTable({ editProp }) {
                     </Td>
                     <Td>
                       <EditCandidato dataProp={editProp} prevData={dato} />
-                    </Td>
-                    <Td
-                      onClick={() => {
-                        let del = deleteCandidate("dui", dato.dui);
-                        del.then((res) => {
-                          if (res == null) {
-                            toast({
-                              title: "Candidato eliminado exitosamente",
-                              status: "Success",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          } else {
-                            toast({
-                              title: "Error: El candidato no ha sido eliminado",
-                              status: "error",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          }
-                        });
-                      }}
-                    >
-                      <MdOutlineDelete />
                     </Td>
                   </Tr>
                 );
