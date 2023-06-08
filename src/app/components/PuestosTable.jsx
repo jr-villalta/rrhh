@@ -10,6 +10,7 @@ import {
   TableCaption,
   TableContainer,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { MdOutlineDelete } from "react-icons/md";
 import Editar from "./EditPuestos";
@@ -52,13 +53,12 @@ const deletePuesto = async (col, id) => {
   }
 };
 
-export default function PuestosTable({editProp}) {
+export default function PuestosTable({ editProp }) {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
-      // console.log(data);
       setDatosCargados(data || []);
     };
 
@@ -72,7 +72,6 @@ export default function PuestosTable({editProp}) {
         "postgres_changes",
         { event: "*", schema: "public", table: dataProp.table },
         (payload) => {
-          // console.log(payload);
           fetchDataAndSetState();
         }
       )
@@ -84,6 +83,7 @@ export default function PuestosTable({editProp}) {
   }, [datosCargados]);
 
   const toast = useToast();
+
   return (
     <>
       <TableContainer>
@@ -107,11 +107,29 @@ export default function PuestosTable({editProp}) {
                     bg={dato.estadoPuesto ? "green.200" : "red.200"}
                   >
                     <Td>{dato.nombrePuesto}</Td>
-                    <Td>{dato.descripcionPuesto}</Td>
-                    <Td >{dato.requisitos}</Td>
+                    <Td>
+                      <Box
+                        w={300}
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                        whiteSpace="wrap"
+                      >
+                        {dato.descripcionPuesto}
+                      </Box>
+                    </Td>
+                    <Td>
+                      <Box
+                        w={400}
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                        whiteSpace="wrap"
+                      >
+                        {dato.requisitos}
+                      </Box>
+                    </Td>
                     <Td>{dato.estadoPuesto ? "Activo" : "Inactivo"}</Td>
                     <Td>
-                      <Editar dataProp={editProp} prevData={dato}/>
+                      <Editar dataProp={editProp} prevData={dato} />
                     </Td>
                     <Td
                       onClick={() => {
@@ -124,7 +142,7 @@ export default function PuestosTable({editProp}) {
                               duration: 3000,
                               isClosable: true,
                             });
-                          }else{
+                          } else {
                             toast({
                               title: "Error: No se pudo eliminar el puesto",
                               status: "error",

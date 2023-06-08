@@ -10,6 +10,7 @@ import {
   TableCaption,
   TableContainer,
   useToast,
+  Box,
 } from "@chakra-ui/react";
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import EditSeguimiento from "./EditSeguimiento";
@@ -44,7 +45,6 @@ export default function SeguimientoTable() {
   useEffect(() => {
     const fetchDataAndSetState = async () => {
       const data = await fetchData();
-      // console.log(data);
       setDatosCargados(data || []);
     };
 
@@ -58,7 +58,6 @@ export default function SeguimientoTable() {
         "postgres_changes",
         { event: "*", schema: "public", table: dataProp.table },
         (payload) => {
-          // console.log(payload);
           fetchDataAndSetState();
         }
       )
@@ -70,7 +69,7 @@ export default function SeguimientoTable() {
   }, [datosCargados]);
 
   const toast = useToast();
-  // console.log("Renderizado");
+
   return (
     <>
       <TableContainer mt={5}>
@@ -103,7 +102,16 @@ export default function SeguimientoTable() {
                         " " +
                         dato.candidatos.apellidos}
                     </Td>
-                    <Td>{dato.puestostrabajo.nombrePuesto}</Td>
+                    <Td>
+                      <Box
+                        w={300}
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                        whiteSpace="wrap"
+                      >
+                        {dato.puestostrabajo.nombrePuesto}
+                      </Box>
+                    </Td>
                     <Td>{dato.etapa}</Td>
                     {dato.aprobacion == null ? (
                       <Td>No definido</Td>

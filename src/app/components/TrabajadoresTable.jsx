@@ -10,6 +10,7 @@ import {
   TableCaption,
   TableContainer,
   useToast,
+  Box
 } from "@chakra-ui/react";
 import EditTrabajadores from "./EditTrabajadores";
 import { HiMinusCircle, HiCheckCircle } from "react-icons/hi2";
@@ -130,7 +131,7 @@ export default function TrabajadoresTable() {
                         dato.candidatos.apellidos}
                     </Td>
                     <Td>
-                    ${" "}
+                      ${" "}
                       {(() => {
                         let salary = dato.categoriascapital.salarioBase;
                         salary = salary.toFixed(2);
@@ -143,7 +144,16 @@ export default function TrabajadoresTable() {
                       <Td>No definido</Td>
                     )}
                     {dato.direccion != null ? (
-                      <Td>{dato.direccion}</Td>
+                      <Td>
+                        <Box
+                          w={300}
+                          overflow="hidden"
+                          textOverflow="ellipsis"
+                          whiteSpace="wrap"
+                        >
+                          {dato.direccion}
+                        </Box>
+                      </Td>
                     ) : (
                       <Td>No definido</Td>
                     )}
