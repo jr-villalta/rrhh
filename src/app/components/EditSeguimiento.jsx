@@ -60,7 +60,7 @@ export default function EditSeguimiento({ prevData }) {
   };
   const handleSubmit = () => {
     let res = editData(formData, "id", prevData.id);
-    console.log(formData);
+    // console.log(formData);
     return null;
   };
 

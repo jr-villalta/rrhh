@@ -78,7 +78,7 @@ export default function EditCandidatos({ dataProp, prevData }) {
                       name={column.key}
                       onChange={handleInputChange}
                       type={column.typeCol}
-                      defaultValue={prevData[column.key]}
+                      defaultValue={prevData[column.key] != null ? prevData[column.key] : ""}
                       isReadOnly={column.key == "dui" ? true : false}
                       bg={column.key == "dui" ? "gray.200" : "white"}
                     />
