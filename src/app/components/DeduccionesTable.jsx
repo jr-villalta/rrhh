@@ -11,7 +11,8 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
+import EditDeducciones from "./EditDeducciones";
 
 const dataProp = {
   table: "deducciones",
@@ -94,6 +95,7 @@ export default function DeduccionesTable() {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
               <Th></Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -104,6 +106,9 @@ export default function DeduccionesTable() {
                     <Td>{dato.nombre}</Td>
                     <Td>{dato.porcentajeTrabajador} %</Td>
                     <Td>{dato.porcentajeEmpleador} %</Td>
+                    <Td>
+                      <EditDeducciones prevData={dato} />
+                    </Td>
                     <Td
                       onClick={() => {
                         let del = deleteCandidate("id", dato.id);
@@ -115,7 +120,7 @@ export default function DeduccionesTable() {
                               duration: 3000,
                               isClosable: true,
                             });
-                          }else{
+                          } else {
                             toast({
                               title: "Error: no se pudo eliminar la deduccion",
                               status: "error",
