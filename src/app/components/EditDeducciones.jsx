@@ -17,7 +17,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
-import { supabase } from "@app/supabaseClient";
+import { supabase } from "@app/utils/supabaseClient";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 
 const dataProp = {
@@ -75,7 +75,7 @@ export default function EditCategorias({ prevData }) {
   const handleSubmit = () => {
     let res = editData(formData, "id", prevData.id);
     // console.log(formData);
-    return null;
+    return res;
   };
 
   return (

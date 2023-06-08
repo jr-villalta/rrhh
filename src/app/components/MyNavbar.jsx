@@ -69,10 +69,6 @@ const menu = [
         path: "/gestion-nominas/prestaciones",
       },
       {
-        Nombre: "Beneficios Económicos",
-        path: "/gestion-nominas/beneficios-economicos",
-      },
-      {
         Nombre: "Nómina de Salario Mensuales",
         path: "/gestion-nominas/nomina-mensual",
       },

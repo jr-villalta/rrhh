@@ -16,7 +16,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
-import { supabase } from "@app/supabaseClient";
+import { supabase } from "@app/utils/supabaseClient";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 
 const dataProp = {
@@ -61,7 +61,7 @@ export default function EditSeguimiento({ prevData }) {
   const handleSubmit = () => {
     let res = editData(formData, "id", prevData.id);
     // console.log(formData);
-    return null;
+    return res;
   };
 
   let visible = prevData.aprobacion == null;

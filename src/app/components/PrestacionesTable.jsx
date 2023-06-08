@@ -11,13 +11,16 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineDelete } from "react-icons/md";
-import EditDeducciones from "./EditDeducciones";
+import EditPrestacion from "./EditPrestacion";
 
 const dataProp = {
-  table: "deducciones",
-  tableCaptionText: "Lista de deducciones",
-  thItems: ["Nombre", "Porcentaje del trabajador", "Porcentaje del empleador"],
+  table: "prestaciones",
+  tableCaptionText: "Lista de candidatos",
+  thItems: [
+    "Codigo",
+    "Descripcion",
+    "Valor",
+  ],
 };
 
 const fetchData = async () => {
@@ -34,24 +37,7 @@ const fetchData = async () => {
   }
 };
 
-const deleteCandidate = async (col, id) => {
-  try {
-    const { data, error } = await supabase
-      .from(dataProp.table)
-      .delete()
-      .eq(col, id);
-
-    if (error) {
-      return error;
-    } else {
-      return data;
-    }
-  } catch (error) {
-    return error;
-  }
-};
-
-export default function DeduccionesTable() {
+export default function PrestacionesTable() {
   const [datosCargados, setDatosCargados] = useState(null);
 
   useEffect(() => {
@@ -86,7 +72,7 @@ export default function DeduccionesTable() {
   // console.log("Renderizado");
   return (
     <>
-      <TableContainer>
+      <TableContainer mt={2}>
         <Table variant="striped" colorScheme="teal">
           <TableCaption>{dataProp.tableCaptionText}</TableCaption>
           <Thead>
@@ -95,43 +81,18 @@ export default function DeduccionesTable() {
                 return <Th key={thItem}>{thItem}</Th>;
               })}
               <Th></Th>
-              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
             {datosCargados != null &&
               datosCargados.map((dato) => {
                 return (
-                  <Tr key={dato.id}>
-                    <Td>{dato.nombre}</Td>
-                    <Td>{dato.porcentajeTrabajador} %</Td>
-                    <Td>{dato.porcentajeEmpleador} %</Td>
+                  <Tr key={dato.cod}>
+                    <Td>{dato.cod}</Td>
+                    <Td>{dato.descripcion}</Td>
+                    <Td>{dato.valor}{dato.porcentaje ? "%" : ""}</Td>
                     <Td>
-                      <EditDeducciones prevData={dato} />
-                    </Td>
-                    <Td
-                      onClick={() => {
-                        let del = deleteCandidate("id", dato.id);
-                        del.then((res) => {
-                          if (res == null) {
-                            toast({
-                              title: "Deduccion eliminada exitosamente",
-                              status: "success",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          } else {
-                            toast({
-                              title: "Error: no se pudo eliminar la deduccion",
-                              status: "error",
-                              duration: 3000,
-                              isClosable: true,
-                            });
-                          }
-                        });
-                      }}
-                    >
-                      <MdOutlineDelete />
+                      <EditPrestacion prevData={dato}/>
                     </Td>
                   </Tr>
                 );
