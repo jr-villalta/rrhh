@@ -1,5 +1,7 @@
 import { supabase } from "@app/utils/supabaseClient";
 import { useEffect, useState } from "react";
+import { MdOutlineDelete } from "react-icons/md";
+import EditCategorias from "./EditCategorias";
 import {
   Table,
   Thead,
@@ -11,8 +13,6 @@ import {
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineDelete } from "react-icons/md";
-import EditCategorias from "./EditCategorias";
 
 const dataProp = {
   table: "categoriascapital",
