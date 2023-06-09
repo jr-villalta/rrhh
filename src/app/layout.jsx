@@ -17,6 +17,7 @@ import {
   Flex,
   useToast,
 } from "@chakra-ui/react";
+import { Router } from "next/router";
 
 const metadata = {
   title: "RH System",
@@ -29,12 +30,8 @@ const theme = extendBaseTheme({
 
 const signInWithEmail = async (email) => {
   try {
-    const currentURL = window.location.href;
     const { data, error } = await supabase.auth.signInWithOtp({
-      email: email,
-      options: {
-        emailRedirectTo: currentURL,
-      },
+      email: email
     });
     if (error) {
       return error;
@@ -82,6 +79,8 @@ export default function RootLayout({ children }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
+
+    fetchDataAndSetState();
 
     const {
       data: { subscription },
@@ -135,7 +134,6 @@ export default function RootLayout({ children }) {
                         }}
                         onClick={async (e) => {
                           e.preventDefault();
-                          await fetchDataAndSetState();
                           if (validarCorreo(email, correos) && email.length > 0) {
                             let message = await signInWithEmail(email);
                             toast({
@@ -155,8 +153,6 @@ export default function RootLayout({ children }) {
                               isClosable: true,
                             });
                           }
-                          // console.log(message);
-                          // window.close();
                         }}
                       >
                         Inicia sesión
