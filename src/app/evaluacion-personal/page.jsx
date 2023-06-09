@@ -1,8 +1,11 @@
+"use client";
+import React from "react";
+import ReporteEvaluacionPersonal from "@app/components/ReporteEvaluacionPersonal";
+
 export default function EvalPersonal() {
-    return (
-      <>
-        <div>You are in evaluacion de personal</div>
-      </>
-    )
-  }
-  
+  return (
+    <>
+      <ReporteEvaluacionPersonal />
+    </>
+  );
+}
