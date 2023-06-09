@@ -47,10 +47,11 @@ const menu = [
         Nombre: "Expediente de los Trabajadores",
         path: "/gestion-reclutamiento/expediente-trabajadores",
       },
-      {
-        Nombre: "Reporte o Informe de categoría o módulo",
-        path: "/gestion-reclutamiento",
-      },
+      //  ,
+      // {
+      //   Nombre: "Reporte o Informe de categoría o módulo",
+      //   path: "/gestion-reclutamiento",
+      // },
     ],
   },
   {
@@ -72,10 +73,11 @@ const menu = [
         Nombre: "Nómina de Salario Mensuales",
         path: "/gestion-nominas/nomina-mensual",
       },
-      {
-        Nombre: "Reporte o Informe de categoría o módulo",
-        path: "/gestion-nominas",
-      },
+      // ,
+      // {
+      //   Nombre: "Reporte o Informe de categoría o módulo",
+      //   path: "/gestion-nominas",
+      // },
     ],
   },
   {
@@ -85,20 +87,22 @@ const menu = [
         Nombre: "Gestor de ausencias y vacaciones",
         path: "/gestion-horarios/gestor-ausencias",
       },
-      {
-        Nombre: "Reporte o Informe de categoría o módulo",
-        path: "/gestion-horarios",
-      },
+      // ,
+      // {
+      //   Nombre: "Reporte o Informe de categoría o módulo",
+      //   path: "/gestion-horarios",
+      // },
     ],
   },
   {
     Titulo: "Evaluación del Personal ",
     items: [
       { Nombre: "Propuesto por cada equipo acorde a la empresa", path: "/" },
-      {
-        Nombre: "Reporte o Informe de categoría o módulo",
-        path: "/evaluacion-personal",
-      },
+      // ,
+      // {
+      //   Nombre: "Reporte o Informe de categoría o módulo",
+      //   path: "/evaluacion-personal",
+      // },
     ],
   },
 ];
