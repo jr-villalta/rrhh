@@ -14,8 +14,8 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 
 const metadata = {
@@ -29,10 +29,11 @@ const theme = extendBaseTheme({
 
 const signInWithEmail = async (email) => {
   try {
+    const currentURL = window.location.href;
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: "http://localhost:3000",
+        emailRedirectTo: currentURL,
       },
     });
     if (error) {
@@ -44,18 +45,38 @@ const signInWithEmail = async (email) => {
   }
 };
 
-export default function RootLayout({ children }) {
-  const [formData, setFormData] = useState({});
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-  const handleSubmit = () => {
-    let message = signInWithEmail(formData.email);
-    return message;
-  };
+const correosValidos = async () => {
+  try {
+    const { data, error } = await supabase.from("correos").select("correo");
+    if (error) {
+      return error;
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
 
+const validarCorreo = (correo, correos) => {
+  let valido = false;
+  correos.forEach((element) => {
+    if (element.correo == correo) {
+      valido = true;
+    }
+  });
+  return valido;
+};
+
+export default function RootLayout({ children }) {
+  const toast = useToast();
+  const [email, setEmail] = useState(null);
   const [session, setSession] = useState(null);
+  const [correos, setCorreos] = useState(null);
+
+  const fetchDataAndSetState = async () => {
+    const data = await correosValidos();
+    setCorreos(data);
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -94,16 +115,16 @@ export default function RootLayout({ children }) {
                     <Link color={"blue.400"}>fantásticas funciones</Link> ✌️
                   </Text>
                 </Stack>
-                <Box
-                  rounded={"lg"}
-                  bg="white"
-                  boxShadow={"lg"}
-                  p={8}
-                >
+                <Box rounded={"lg"} bg="white" boxShadow={"lg"} p={8}>
                   <Stack spacing={4}>
                     <FormControl id="email">
                       <FormLabel>Dirección de correo electrónico</FormLabel>
-                      <Input type="email" onChange={handleInputChange} />
+                      <Input
+                        type="email"
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                      />
                     </FormControl>
                     <Stack spacing={10}>
                       <Button
@@ -112,10 +133,30 @@ export default function RootLayout({ children }) {
                         _hover={{
                           bg: "blue.500",
                         }}
-                        onClick={() => {
-                          // let res = handleSubmit();
-                          // console.log(res);
-                          setSession(true);
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          await fetchDataAndSetState();
+                          if (validarCorreo(email, correos) && email.length > 0) {
+                            let message = await signInWithEmail(email);
+                            toast({
+                              title: "Correo enviado",
+                              description:
+                                "Se ha enviado un correo a tu bandeja de entrada",
+                              status: "success",
+                              duration: 3000,
+                              isClosable: true,
+                            });
+                          } else {
+                            toast({
+                              title: "Correo no valido",
+                              description: "El correo ingresado no es valido",
+                              status: "error",
+                              duration: 3000,
+                              isClosable: true,
+                            });
+                          }
+                          // console.log(message);
+                          // window.close();
                         }}
                       >
                         Inicia sesión

@@ -1,5 +1,3 @@
-import { supabase } from "@app/utils/supabaseClient";
-import { useEffect, useState } from "react";
 import {
   Table,
   Thead,
@@ -13,6 +11,8 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
+import { supabase } from "@app/utils/supabaseClient";
+import { useEffect, useState } from "react";
 
 const fetchData = async () => {
   try {
@@ -255,11 +255,13 @@ export default function NominaEmpleados() {
               })}
           </Tbody>
           <Tfoot>
-            <Flex justify="end">
-              <Button colorScheme="teal" size="sm" my={2}>
-                Generar boletas de pago
-              </Button>
-            </Flex>
+            <Tr>
+              <Th>
+                <Button colorScheme="teal" size="sm" my={2}>
+                  Generar boletas de pago
+                </Button>
+              </Th>
+            </Tr>
           </Tfoot>
         </Table>
       </TableContainer>

@@ -16,7 +16,6 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  MenuDivider,
   Avatar,
   Button,
   Flex,
@@ -24,6 +23,7 @@ import {
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import { supabase } from "@app/utils/supabaseClient";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { IoLogOutSharp } from "react-icons/io5";
 
@@ -144,6 +144,10 @@ export default function MyNavbar() {
               bg="gray.900"
               color="white"
               icon={<IoLogOutSharp />}
+              onClick={async () => {
+                const { error } = await supabase.auth.signOut();
+                console.log(error);
+              }}
             >
               Cerrar Sesión
             </MenuItem>
