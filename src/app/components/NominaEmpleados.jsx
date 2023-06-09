@@ -8,7 +8,6 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Flex,
   Button,
 } from "@chakra-ui/react";
 import { supabase } from "@app/utils/supabaseClient";
@@ -254,7 +253,7 @@ export default function NominaEmpleados() {
                 );
               })}
           </Tbody>
-          <Tfoot>
+          {/* <Tfoot>
             <Tr>
               <Th>
                 <Button colorScheme="teal" size="sm" my={2}>
@@ -262,7 +261,7 @@ export default function NominaEmpleados() {
                 </Button>
               </Th>
             </Tr>
-          </Tfoot>
+          </Tfoot> */}
         </Table>
       </TableContainer>
     </>
