@@ -18,7 +18,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
-import { supabase } from "@app/supabaseClient";
+import { supabase } from "@app/utils/supabaseClient";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 
 const dataProp = {

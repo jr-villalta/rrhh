@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { supabase } from "@app/supabaseClient";
+import { supabase } from "@app/utils/supabaseClient";
 
 export default function GestionReclutamiento() {
   const [data, setData] = useState(null);

@@ -13,13 +13,27 @@ import {
   Button,
   useDisclosure,
   useToast,
-  Select,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { supabase } from "@app/utils/supabaseClient";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 
-export default function EditarPuestos({ dataProp, prevData }) {
+const dataProp = {
+  table: "prestaciones",
+  tableCaptionText: "Lista de prestaciones",
+  headerText: "Editar prestacion ",
+  tittleSuccess: "Prestacion actualizada",
+  tittleError: "Error al actualizar prestacion",
+  columns: [
+    { name: "Codigo", key: "cod", typeCol: "text", diseable: true },
+    { name: "Descripcion", key: "descripcion", typeCol: "text", diseable: true },
+    { name: "Valor", key: "valor", typeCol: "number", diseable: false },
+  ],
+};
+
+export default function EditPrestacion({ prevData }) {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,12 +65,14 @@ export default function EditarPuestos({ dataProp, prevData }) {
     }
   };
   const handleSubmit = () => {
-    let res = editData(formData, "id", prevData.id);
+    let res = editData(formData, "cod", prevData.cod);
+    // console.log(formData);
     return res;
   };
+
   return (
     <>
-    < MdOutlineModeEditOutline onClick={onOpen}/>
+      <MdOutlineModeEditOutline onClick={onOpen} />
 
       <Modal
         initialFocusRef={initialRef}
@@ -70,30 +86,44 @@ export default function EditarPuestos({ dataProp, prevData }) {
             <ModalHeader>{dataProp.headerText}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              {dataProp.columns.map((column) => {
-                return (
-                  <FormControl key={column.key} mt={2}>
-                    <FormLabel>{column.name}</FormLabel>
+              {dataProp.columns.map((col) => {
+                return prevData.porcentaje == true && col.key == 'valor' ? (
+                  <FormControl key={col.name}>
+                    <FormLabel>{col.name}</FormLabel>
+                    <InputGroup>
+                      <Input
+                        name={col.key}
+                        onChange={handleInputChange}
+                        type={col.typeCol}
+                        defaultValue={
+                          prevData[col.key] != null && prevData[col.key]
+                        }
+                        disabled={col.diseable}
+                      />
+                      <InputRightElement
+                        pointerEvents="none"
+                        color="gray.400"
+                        fontSize="1.2em"
+                      >
+                        %
+                      </InputRightElement>
+                    </InputGroup>
+                  </FormControl>
+                ) : (
+                  <FormControl key={col.name}>
+                    <FormLabel>{col.name}</FormLabel>
                     <Input
-                      name={column.key}
+                      name={col.key}
                       onChange={handleInputChange}
-                      type={column.typeCol}
-                      defaultValue={prevData[column.key]}
+                      type={col.typeCol}
+                      defaultValue={
+                        prevData[col.key] != null && prevData[col.key]
+                      }
+                      disabled={col.diseable}
                     />
                   </FormControl>
                 );
               })}
-              <FormControl mt={2}>
-                <FormLabel>Estado</FormLabel>
-                <Select
-                  name="estadoPuesto"
-                  onChange={handleInputChange}
-                  defaultValue={prevData.estadoPuesto}
-                >
-                  <option value={true}>Activo</option>
-                  <option value={false}>Inactivo</option>
-                </Select>
-              </FormControl>
             </ModalBody>
 
             <ModalFooter>

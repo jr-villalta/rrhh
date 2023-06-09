@@ -1,4 +1,4 @@
-import { supabase } from "@app/supabaseClient";
+import { supabase } from "@app/utils/supabaseClient";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -12,7 +12,6 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import EditCandidato from "./EditCandidato";
 
 const dataProp = {
@@ -30,23 +29,6 @@ const dataProp = {
 const fetchData = async () => {
   try {
     let { data, error } = await supabase.from(dataProp.table).select("*");
-
-    if (error) {
-      return error;
-    } else {
-      return data;
-    }
-  } catch (error) {
-    return error;
-  }
-};
-
-const deleteCandidate = async (col, id) => {
-  try {
-    const { data, error } = await supabase
-      .from(dataProp.table)
-      .delete()
-      .eq(col, id);
 
     if (error) {
       return error;
