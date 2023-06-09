@@ -25,7 +25,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { IoSettingsOutline, IoLogOutSharp } from "react-icons/io5";
+import { IoLogOutSharp } from "react-icons/io5";
 
 const menu = [
   {
@@ -73,10 +73,6 @@ const menu = [
         path: "/gestion-nominas/nomina-mensual",
       },
       {
-        Nombre: "Boleta de Pago Mensuales",
-        path: "/gestion-nominas/boleta-pago",
-      },
-      {
         Nombre: "Reporte o Informe de categoría o módulo",
         path: "/gestion-nominas",
       },
@@ -86,24 +82,8 @@ const menu = [
     Titulo: "Módulo de Gestión del tiempo y horarios",
     items: [
       {
-        Nombre: "Control de días laborables",
-        path: "/gestion-horarios/dias-laborados",
-      },
-      {
-        Nombre: "Control de incapacidades",
-        path: "/gestion-horarios/incapacidades",
-      },
-      {
-        Nombre: "Control de ausencias injustificadas",
-        path: "/gestion-horarios/ausencias-injustificadas",
-      },
-      {
-        Nombre: "Control de ausencia justificadas",
-        path: "/gestion-horarios/ausencias-justificadas",
-      },
-      {
-        Nombre: "Programación de Vacaciones Anuales",
-        path: "/gestion-horarios/programacion-vacaciones",
+        Nombre: "Gestor de ausencias y vacaciones",
+        path: "/gestion-horarios/gestor-ausencias",
       },
       {
         Nombre: "Reporte o Informe de categoría o módulo",
@@ -156,18 +136,9 @@ export default function MyNavbar() {
             bg="gray.900"
             colorScheme="teal"
           >
-            <Avatar size={"sm"} name={"C G"} />
+            <Avatar size={"sm"} name={"A D"} />
           </MenuButton>
           <MenuList bg="gray.900" color="white">
-            <MenuItem
-              p={1.5}
-              bg="gray.900"
-              color="white"
-              icon={<IoSettingsOutline />}
-            >
-              Configuracion
-            </MenuItem>
-            <MenuDivider borderColor="teal.500" />
             <MenuItem
               p={1.5}
               bg="gray.900"
@@ -190,7 +161,7 @@ export default function MyNavbar() {
         <DrawerOverlay>
           <DrawerContent bg="gray.700" color="white">
             <DrawerHeader></DrawerHeader>
-            <DrawerCloseButton/>
+            <DrawerCloseButton />
             <DrawerBody>
               <Accordion mt={2}>
                 {menu.map((menuItem) => (

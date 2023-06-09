@@ -4,11 +4,14 @@ import {
   Table,
   Thead,
   Tbody,
+  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
   TableContainer,
+  Flex,
+  Button,
 } from "@chakra-ui/react";
 
 const fetchData = async () => {
@@ -251,6 +254,13 @@ export default function NominaEmpleados() {
                 );
               })}
           </Tbody>
+          <Tfoot>
+            <Flex justify="end">
+              <Button colorScheme="teal" size="sm" my={2}>
+                Generar boletas de pago
+              </Button>
+            </Flex>
+          </Tfoot>
         </Table>
       </TableContainer>
     </>
