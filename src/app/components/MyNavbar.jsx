@@ -97,7 +97,7 @@ const menu = [
   {
     Titulo: "Evaluación del Personal ",
     items: [
-      { Nombre: "Propuesto por cada equipo acorde a la empresa", path: "/" },
+      { Nombre: "Evaluar", path: "/evaluacion-personal" },
       // ,
       // {
       //   Nombre: "Reporte o Informe de categoría o módulo",
