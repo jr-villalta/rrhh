@@ -1,29 +1,24 @@
 "use client";
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Flex,
-} from "@chakra-ui/react";
-import { PrestacionesCalc } from "@app/utils/prestacionesCalc";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import NominaEmpleados from "@app/components/NominaEmpleados";
+import NominaTrabajadores from "@app/components/NominaTrabajadores";
+// import { PrestacionesCalc } from "@app/utils/PrestacionesCalc";
 
 export default function NominaMensual() {
-  console.log(PrestacionesCalc(365));
+  // console.log(PrestacionesCalc(365));
   return (
     <>
       <Tabs variant="enclosed">
         <TabList>
-          <Tab>Trabajadores</Tab>
           <Tab>Empleados</Tab>
+          <Tab>Empresa</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <p>one!</p>
+            <NominaEmpleados />
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <NominaTrabajadores />
           </TabPanel>
         </TabPanels>
       </Tabs>
