@@ -2,13 +2,14 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
   TableContainer,
-  Button,
+  // Tfoot,
+  // Flex,
+  // Button,
 } from "@chakra-ui/react";
 import { supabase } from "@app/utils/supabaseClient";
 import { useEffect, useState } from "react";
