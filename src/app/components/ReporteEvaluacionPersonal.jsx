@@ -128,7 +128,7 @@ export default function EvalPersonal() {
   const firma = "Firma";
 
   return (
-    <Box mx="10%">
+    <Box mx="10%" my={3}>
       <Box mb={4}>{fechaActual}</Box>
       <Box mb={4}>
         <label htmlFor="empleadoInput">Empleado: </label>
