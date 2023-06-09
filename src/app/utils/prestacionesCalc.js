@@ -14,7 +14,7 @@ const fetchData = async () => {
   }
 };
 
-export function prestacionesCalc(salario) {
+export function PrestacionesCalc(salario) {
   const [datosCargados, setDatosCargados] = useState(null);
   let PHN, PHE, PVR, PHEDA, HS, PDEDA;
   let res;
