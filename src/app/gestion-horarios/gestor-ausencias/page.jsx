@@ -1,5 +1,6 @@
 "use client";
 import AgregarAusencia from "@app/components/AgregarAusencia";
+import AusenciasTable from "@app/components/AusenciasTable";
 
 const dataProp = {
     columns: [
@@ -16,6 +17,7 @@ export default function GestorAusencias() {
   return (
     <>
       < AgregarAusencia dataProp={dataProp} />
+      < AusenciasTable />
     </>
   );
 }

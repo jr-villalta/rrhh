@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Box, Table, Thead, Tbody, Tr, Th, Td, Button, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Button,
+  Flex,
+} from "@chakra-ui/react";
 
 export default function EvalPersonal() {
   const [empleado, setEmpleado] = useState("");
@@ -11,7 +21,7 @@ export default function EvalPersonal() {
     comunicacion: 0,
     conocimientos: 0,
     calidad: 0,
-    resolucion: 0
+    resolucion: 0,
   });
   const [comentarios, setComentarios] = useState("");
   const [totalPuntaje, setTotalPuntaje] = useState(0);
@@ -93,7 +103,7 @@ export default function EvalPersonal() {
       comunicacion: 0,
       conocimientos: 0,
       calidad: 0,
-      resolucion: 0
+      resolucion: 0,
     });
     setComentarios("");
     setTotalPuntaje(0);
@@ -104,7 +114,7 @@ export default function EvalPersonal() {
     "Comunicación efectiva",
     "Conocimientos",
     "Calidad del trabajo realizado",
-    "Resolución de problemas"
+    "Resolución de problemas",
   ];
 
   const pesos = [20, 15, 25, 20, 20];
@@ -118,10 +128,8 @@ export default function EvalPersonal() {
   const firma = "Firma";
 
   return (
-    <Box mx="10%">
-        <Box mb={4}>
-        {fechaActual}
-      </Box>
+    <Box mx="10%" my={4}>
+      <Box mb={4}>{fechaActual}</Box>
       <Box mb={4}>
         <label htmlFor="empleadoInput">Empleado: </label>
         <input
@@ -173,7 +181,9 @@ export default function EvalPersonal() {
                     min="1"
                     max="10"
                     value={evaluacion[criterio]}
-                    onChange={(e) => handlePuntajeChange(criterio, e.target.value)}
+                    onChange={(e) =>
+                      handlePuntajeChange(criterio, e.target.value)
+                    }
                     style={{ border: "1px solid gray" }}
                   />
                 </Td>
@@ -194,7 +204,8 @@ export default function EvalPersonal() {
       </Box>
 
       <Box mt={4}>
-        <strong>Puntaje total de la evaluación:</strong> {totalPuntaje.toFixed(2)}
+        <strong>Puntaje total de la evaluación:</strong>{" "}
+        {totalPuntaje.toFixed(2)}
       </Box>
 
       <Flex mt={4} justifyContent="center">
